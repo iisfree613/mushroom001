@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang='zh'>
+    <head>
+        <meta CharacterSet='UTF-8'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        {% load static %}
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+{#        <link rel="stylesheet" href="{% static 'css/style.css' %}">#}
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{#        <script src="{% static 'js/main.js' %}"></script>#}
+        {% block script %}{% endblock %}
+    </head>
+    <body>
+        <!-- head -->
+        <nav id="navbar" class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand mb-0" href="{% url 'index' %}">IISFREE订单管理系统</a>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div id="navbar-collapse" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        {% block nav_list %}{% endblock %}
+                    </ul>
+                    <form class="navbar-form navbar-right" action="{% url 'logout' %}" method="get">
+                        <span>Welcome, {{ user }}.&nbsp;&nbsp;</span>
+                        <button id="logout" class="btn btn-default btn-sm">登出</button>
+                    </form>
+                </div>
+                {% else %}
+                <div id="navbar-collapse" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    <form class="navbar-form navbar-right" action="{% url 'login' %}" method="get">
+                        <span>Welcome this site!&nbsp;&nbsp;</span>
+                        <button id="login" class="btn btn-default btn-sm">登录</button>
+                    </form>
+                </div>
+
+                {% endif %}
+            </div>
+        </nav>
+        <!-- body -->
+        <div class="container" id="elem_cont">
+            {% if message is not none %}
+                <div class="alert alert-{{ message.0 }} alert-dismissable">{{ message.1 }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endif %}
+            {% block control %}
+            {% endblock %}
+        </div>
+        <div class="container" id="elem_disp">
+            {% block disp %}
+            {% endblock %}
+        </div>
+        <div class="container" id="elem_misc">
+            {% block misc %}
+            {% endblock %}
+        </div>
+        <!-- footer -->
+        <nav class="navbar navbar-fixed-bottom" id="nav_footer" role="navigation">
+            <div class="container" id="elem_foot">
+                <footer class="navbar" id="footer">
+                    <hr>
+                    {% block botm_cont %}
+                    {% endblock %}
+                    <p>&copy; 2019 IISFREE</p>
+                </footer>
+            </div>
+        </nav>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sign Up
+{% endblock %}
+
+{% block control %}
+<form class="form-signin" action="{% url 'signup' %}" method="post">
+    {% csrf_token %}
+    <h2 class="form-signin-heading">注册</h2>
+    <div class="form-group">
+        <div class="fieldWrapper">
+            {{ form.username.errors }}
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.password1.errors }}
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.password2.errors }}
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.email.errors }}
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.work_id.errors }}
+            {{ form.work_id.label_tag }}
+            {{ form.work_id }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.captcha.errors }}
+            {{ form.captcha.label_tag }}
+            {{ form.captcha }}
+        </div>
+    </div>
+    <button id="signUp" class="btn btn-lg btn-primary btn-block">注册</button>
+</form>
+    <br>
+<form class="form-signin" action="{% url 'login' %}">
+    <button id="signIn" class="btn btn-lg btn-default btn-block">登录</button>
+</form>
+{% endblock %}
+{% block script %}
+    <script>
+    function set_class() {
+    let cap = document.getElementById('id_captcha_1');
+    cap.setAttribute('class', "form-control");
+    }
+    setInterval(set_class, 100)
+    </script>
+{% endblock %}
+

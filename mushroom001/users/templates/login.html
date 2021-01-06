@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+用户登录
+{% endblock %}
+
+{% block control %}
+<form class="form-signin" action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <h2 class="form-signin-heading">登录</h2>
+    <div class="form-group">
+        <div class="fieldWrapper">
+            {{ login_form.username.errors }}
+            {{ login_form.username.label_tag }}
+            {{ login_form.username }}
+        </div>
+        <div class="fieldWrapper">
+            {{ login_form.password.errors }}
+            {{ login_form.password.label_tag }}
+            {{ login_form.password }}
+        </div>
+        <div class="fieldWrapper">
+            {{ login_form.captcha.errors }}
+            {{ login_form.captcha.label_tag }}
+            {{ login_form.captcha }}
+        </div>
+    </div>
+    <label for="signIn" class="sr-only">Click</label>
+    <button id="signIn" class="btn btn-lg btn-primary btn-block" >登录</button>
+</form>
+    <br>
+<form class="form-signin" action="{% url 'signup' %}">
+    <button id="signUp" class="btn btn-lg btn-default btn-block">注册</button>
+</form>
+{% endblock %}
+{% block script %}
+    <script>
+    function set_class() {
+    let cap = document.getElementById('id_captcha_1');
+    cap.setAttribute('class', "form-control");
+    }
+    setInterval(set_class, 100)
+    </script>
+{% endblock %}
